@@ -38,6 +38,8 @@ class TreeNode():
         ans = []
         if self.leftChild != None:
             ans += self.leftChild.inorder()
-        ans.append((key, value))
+        ans.append((self.key, self.value))
         if self.rightChild != None:
             ans += self.rightChild.inorder()
+
+        return ans
