@@ -19,5 +19,32 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         a = BinarySearchTree(7, 'Harry')
         self.assertTrue(a.inorder() == [(7, 'Harry')])
 
+    def test_simple_element_put(self):
+        """ Insert simple element and test status. """
+	a = BinarySearchTree()
+	a.put(7, 'Harry')
+        self.assertTrue(a.inorder() == [(7, 'Harry')])
+
+    def test_simple_element_setitem(self):
+        """ Setitem simple element and test status. """
+	a = BinarySearchTree()
+	a[7] = 'Harry'
+        self.assertTrue(a.inorder() == [(7, 'Harry')])
+
+    def test_multiple_element_put_init_empty(self):
+        """ Put mulitple items into an empty bst and test inorder. """
+	a = BinarySearchTree()
+	a.put(7, 'Harry')
+	a[8] = 'Ron'
+	a.put(4, 'Hermione')
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (8, 'Ron')])
+
+    def test_multiple_element_put_init_one(self):
+        """ Put mulitple items into a single element bst and test inorder. """
+        a = BinarySearchTree(7, 'Harry')
+	a[8] = 'Ron'
+	a.put(4, 'Hermione')
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (8, 'Ron')])
+
 if __name__ == '__main__':
     unittest.main()

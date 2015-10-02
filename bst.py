@@ -20,6 +20,40 @@ class BinarySearchTree():
         else:
             return self.root.inorder()
 
+    def put(self, key, value):
+        """ Insert a key value pair into the correct location. """
+
+        if self.root == None:
+            self.root = TreeNode(key, value)
+        else:
+            self._put(key, value, self.root)
+
+    def _put(self, key, value, currentNode):
+        """ Insert key, value into self. 
+
+        currentNode -- node being considered
+        """
+
+        if key < currentNode.key:
+            # insert to the left of the root
+            if currentNode.leftChild != None:
+                self._put(key, value, currentNode.leftChild)
+            else:
+                currentNode.leftChild = TreeNode(key, value)
+        elif key > currentNode.key:
+            # insert to the right of the root
+            if currentNode.rightChild != None:
+                self._put(key, value, currentNode.rightChild)
+            else:
+                currentNode.rightChild = TreeNode(key, value)
+        else:
+            # update this node
+            currentNode.value = value
+
+    def __setitem__(self, key, value):
+        """ Overriding __setitem__ for style. """
+        self.put(key, value)
+
 class TreeNode():
 
     def __init__(self, key, value):
