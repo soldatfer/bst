@@ -54,6 +54,42 @@ class BinarySearchTree():
         """ Overriding __setitem__ for style. """
         self.put(key, value)
 
+    def get(self, key):
+        """ Retrieve value of key from tree.
+
+        Return None if the key is not present.
+        """
+
+        if self.root == None:
+            return None
+        else:
+            return self._get(key, self.root)
+
+    def _get(self, key, currentNode):
+        """ Get value of key.
+
+        currentNode -- node being considered.
+        """
+
+        if key < currentNode.key:
+            # look into left subtree
+            if currentNode.leftChild == None:
+                return None
+            else:
+                return self._get(key, currentNode.leftChild)
+        elif key > currentNode.key:
+            # look into right subtree
+            if currentNode.rightChild == None:
+                return None
+            else:
+                return self._get(key, currentNode.rightChild)
+        else:
+            return currentNode.value
+
+    def __getitem__(self, key):
+        """ Override [] for style. """
+        return self.get(key)
+
 class TreeNode():
 
     def __init__(self, key, value):
