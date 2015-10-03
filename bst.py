@@ -18,7 +18,21 @@ class BinarySearchTree():
         if self.root == None:
             return []
         else:
-            return self.root.inorder()
+            return self._inorder(self.root)
+
+    def _inorder(self, currentNode):
+        """ Inorder traversal of tree.
+
+        currentNode -- node being considered
+        """
+        if currentNode == None:
+            return []
+        else:
+            ans = []
+            ans += self._inorder(currentNode.leftChild)
+            ans.append((currentNode.key, currentNode.value))
+            ans += self._inorder(currentNode.rightChild)
+            return ans
 
     def put(self, key, value):
         """ Insert a key value pair into the correct location. """
@@ -102,14 +116,3 @@ class TreeNode():
         self.value = value
         self.leftChild = None
         self.rightChild = None
-
-    def inorder(self):
-        """ Return the in order key, value pairs. """
-        ans = []
-        if self.leftChild != None:
-            ans += self.leftChild.inorder()
-        ans.append((self.key, self.value))
-        if self.rightChild != None:
-            ans += self.rightChild.inorder()
-
-        return ans
