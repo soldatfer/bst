@@ -105,5 +105,31 @@ class BinarySearchTreeTestCase(unittest.TestCase):
 	self.assertTrue(a.root.isRoot())
 	self.assertFalse(a._get(8, a.root).isRoot())
 
+    def test_non_existing_delete(self):
+        """ Try to delete a non existant item. """
+        a = BinarySearchTree(7, 'Harry')
+	a.delete(8)
+	self.assertTrue(a.inorder() == [(7, 'Harry')])
+
+    def test_root_delete(self):
+        """ Try to delete the root in a single element tree. """
+        a = BinarySearchTree(7, 'Harry')
+	a.delete(7)
+	self.assertTrue(a.inorder() == [])
+
+    def test_leaf_delete(self):
+        """ Try to delete leaf nodes. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+        a[9] = 'Ginny'
+        a[4] = 'Hermione'
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (8, 'Ron'), (9, 'Ginny')])
+        a.delete(9)
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (8, 'Ron')])
+        a.delete(4)
+        self.assertTrue(a.inorder() == [(7, 'Harry'), (8, 'Ron')])
+        a.delete(8)
+        self.assertTrue(a.inorder() == [(7, 'Harry')])
+
 if __name__ == '__main__':
     unittest.main()

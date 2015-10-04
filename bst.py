@@ -104,6 +104,54 @@ class BinarySearchTree():
         """ Override [] for style. """
         return self.get(key)
 
+    def delete(self, key):
+        """ Delete a node from the tree. """
+
+        if self.get(key) == None:
+            return
+        if self.root == None:
+            return
+        self._delete(self._get(key, self.root))
+
+    def _delete(self, currentNode):
+        """ Actual delete of node. 
+        
+        currentNode -- node being considered. It's children have to be taken care here itself.
+        """
+
+        # different cases considering if the node is leaf, non-leaf or root
+
+        # if node is a root node
+        if currentNode.isRoot():
+            self.root = None
+        # if it is a leaf node -> easiest case, simply remove the node
+        elif currentNode.isLeaf():
+            # remove self from parent
+            if currentNode.key < currentNode.parent.key:
+                currentNode.parent.leftChild = None
+            else:
+                currentNode.parent.rightChild = None
+        # handle non-leaf non-root node
+        else:
+            # we need to remove this node and rewire the links
+            if currentNode.leftChild != None and currentNode.rightChild == None:
+                # simply promote the left child
+                grandparent = currentNode.parent
+                grandparent.leftChild = currentNode.leftChild
+                currentNode.leftChild.parent = grandparent
+
+            elif currentNode.rightChild != None and currentNode.rightChild == None:
+                # simply promote the right child
+                grandparent = currentNode.parent
+                grandparent.rightChild = currentNode.rightChild
+                currentNode.rightChild.parent = grandparent
+
+            else:
+                # both are non None
+                # we choose either the right most child of the left subtree or the leftmost child of the right subtree
+                # TODO
+                pass
+
 class TreeNode():
 
     def __init__(self, key, value, parent):
