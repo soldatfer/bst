@@ -127,3 +127,10 @@ class TreeNode():
             return True
         else:
             return False
+
+    def isRoot(self):
+        """ Return True if node is a root node. """
+        if self.parent == None:
+            return True
+        else:
+            return False

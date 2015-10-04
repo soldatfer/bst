@@ -98,5 +98,12 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         a[8] = 'Ron'
 	self.assertTrue(a._get(8, a.root).parent.value == 'Harry')
 
+    def test_is_root(self):
+        """ Check if root node is identified correctly. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+	self.assertTrue(a.root.isRoot())
+	self.assertFalse(a._get(8, a.root).isRoot())
+
 if __name__ == '__main__':
     unittest.main()
