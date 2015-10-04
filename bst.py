@@ -10,7 +10,7 @@ class BinarySearchTree():
         if key == None:
             self.root = None
         else:
-            self.root = TreeNode(key, value)
+            self.root = TreeNode(key, value, None)
 
     def inorder(self):
         """ Return the bst inorder. """
@@ -38,7 +38,7 @@ class BinarySearchTree():
         """ Insert a key value pair into the correct location. """
 
         if self.root == None:
-            self.root = TreeNode(key, value)
+            self.root = TreeNode(key, value, None)
         else:
             self._put(key, value, self.root)
 
@@ -53,13 +53,13 @@ class BinarySearchTree():
             if currentNode.leftChild != None:
                 self._put(key, value, currentNode.leftChild)
             else:
-                currentNode.leftChild = TreeNode(key, value)
+                currentNode.leftChild = TreeNode(key, value, currentNode)
         elif key > currentNode.key:
             # insert to the right of the root
             if currentNode.rightChild != None:
                 self._put(key, value, currentNode.rightChild)
             else:
-                currentNode.rightChild = TreeNode(key, value)
+                currentNode.rightChild = TreeNode(key, value, currentNode)
         else:
             # update this node
             currentNode.value = value
@@ -106,16 +106,19 @@ class BinarySearchTree():
 
 class TreeNode():
 
-    def __init__(self, key, value):
+    def __init__(self, key, value, parent):
         """ Create a new tree node. 
         
         Key has to be non None.
+        parent -- Parent TreeNode
+            parent = None means that the node is the root
         """
 
         self.key = key
         self.value = value
         self.leftChild = None
         self.rightChild = None
+        self.parent = parent
 
     def isLeaf(self):
         """ Return True if a leaf node. """

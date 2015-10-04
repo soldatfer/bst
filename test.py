@@ -73,19 +73,30 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         self.assertTrue(a[4] == 'Hermione')
 
     def test_simple_leaf(self):
-       """ Tree of single item. """
-       a = BinarySearchTree()
-       a[7] = 'Harry'
-       self.assertTrue(a.root.isLeaf())
+        """ Tree of single item. """
+        a = BinarySearchTree()
+        a[7] = 'Harry'
+        self.assertTrue(a.root.isLeaf())
 
     def test_multiple_leaf(self):
-       """ Tree of single item. """
-       a = BinarySearchTree()
-       a[7] = 'Harry'
-       a[8] = 'Ron'
-       a.put(4, 'Hermione')
-       a[9] = 'Ginny'
-       self.assertFalse(a._get(7, a.root).isLeaf())
+        """ Tree of single item. """
+        a = BinarySearchTree()
+        a[7] = 'Harry'
+        a[8] = 'Ron'
+        a.put(4, 'Hermione')
+        a[9] = 'Ginny'
+        self.assertFalse(a._get(7, a.root).isLeaf())
+
+    def test_no_parent(self):
+        """ Check parent of root. """
+        a = BinarySearchTree(7, 'Harry')
+	self.assertTrue(a.root.parent == None)
+
+    def test_simple_parent(self):
+        """ Check parent. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+	self.assertTrue(a._get(8, a.root).parent.value == 'Harry')
 
 if __name__ == '__main__':
     unittest.main()
