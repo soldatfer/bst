@@ -116,3 +116,11 @@ class TreeNode():
         self.value = value
         self.leftChild = None
         self.rightChild = None
+
+    def isLeaf(self):
+        """ Return True if a leaf node. """
+
+        if self.leftChild == None and self.rightChild == None:
+            return True
+        else:
+            return False
