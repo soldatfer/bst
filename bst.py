@@ -121,11 +121,13 @@ class BinarySearchTree():
 
         # different cases considering if the node is leaf, non-leaf or root
 
-        # if node is a root node
-        if currentNode.isRoot():
-            self.root = None
         # if it is a leaf node -> easiest case, simply remove the node
-        elif currentNode.isLeaf():
+        if currentNode.isLeaf():
+	    # if node is a root node
+	    if currentNode.isRoot():
+		self.root = None
+		return
+
             # remove self from parent
             if currentNode.key < currentNode.parent.key:
                 currentNode.parent.leftChild = None
@@ -140,7 +142,7 @@ class BinarySearchTree():
                 grandparent.leftChild = currentNode.leftChild
                 currentNode.leftChild.parent = grandparent
 
-            elif currentNode.rightChild != None and currentNode.rightChild == None:
+            elif currentNode.rightChild != None and currentNode.leftChild == None:
                 # simply promote the right child
                 grandparent = currentNode.parent
                 grandparent.rightChild = currentNode.rightChild
@@ -149,8 +151,30 @@ class BinarySearchTree():
             else:
                 # both are non None
                 # we choose either the right most child of the left subtree or the leftmost child of the right subtree
-                # TODO
-                pass
+                # choose right most child of left subtree
+
+		candidate = currentNode.leftChild
+		while candidate.rightChild != None:
+	            candidate = candidate.rightChild
+
+		if candidate != currentNode.leftChild:
+		    # somewhere down there
+		    candidate.parent.rightChild = None
+		    candidate.parent = currentNode.parent
+		    currentNode.leftChild.parent = candidate
+		    candidate.leftChild = currentNode.leftChild
+		    candidate.rightChild = currentNode.rightChild
+		    candidate.rightChild.parent = candidate
+		else:
+		    # the immidiate left child is the successor
+		    candidate.parent = currentNode.parent
+		    candidate.rightChild = currentNode.rightChild
+		    candidate.rightChild.parent = candidate
+            
+	    # set new root if needed
+	    if currentNode.isRoot():
+	        self.root = candidate
+	      
 
 class TreeNode():
 

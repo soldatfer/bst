@@ -131,5 +131,49 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         a.delete(8)
         self.assertTrue(a.inorder() == [(7, 'Harry')])
 
+    def test_nonleaf_leftnone_delete(self):
+        """ Try to delete non leaf node with no left child. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+        a[9] = 'Ginny'
+        a[4] = 'Hermione'
+        a.delete(8)
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (9, 'Ginny')])
+
+    def test_nonleaf_rightnone_delete(self):
+        """ Try to delete non leaf node with no right child. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+        a[5] = 'Ginny'
+        a[4] = 'Hermione'
+        a.delete(5)
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (7, 'Harry'), (8, 'Ron')])
+
+    def test_nonleaf_delete(self):
+        """ Try to delete non leaf node with both children. """
+        a = BinarySearchTree(7, 'Harry')
+        a[8] = 'Ron'
+        a[5] = 'Ginny'
+        a[4] = 'Hermione'
+        a[6] = 'Neville'
+
+        """                     7 - Harry
+                             /             \  
+                       5- Ginny           8 - Ron
+                       /      \  
+                4-Hermione    6-Neville
+        """
+
+        a.delete(7)
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (5, 'Ginny'), (6, 'Neville'), (8, 'Ron')])
+        self.assertTrue(a.root.value == 'Neville')
+
+        a[7] = 'Harry'
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (5, 'Ginny'), (6, 'Neville'), (7, 'Harry'), (8, 'Ron')])
+
+        a.delete(6)
+        self.assertTrue(a.inorder() == [(4, 'Hermione'), (5, 'Ginny'), (7, 'Harry'), (8, 'Ron')])
+        self.assertTrue(a.root.value == 'Ginny')
+
 if __name__ == '__main__':
     unittest.main()
